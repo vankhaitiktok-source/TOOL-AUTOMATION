@@ -441,7 +441,7 @@
     .support-btn-primary:hover {
       background-color: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
     
     /* Styles for support-btn-skip */
@@ -673,7 +673,13 @@
   </div>
 
   <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- NEW: download naming helper (must be before popup.js) -->
+  <script src="download-naming.js"></script>
+  <!-- NEW: integration helper (provides autoDownloadPromptImages and read UI options) -->
+  <script src="popup-naming-integration.js"></script>
+
   <script src="popup.js"></script>
   <script src="popup_nagtag.js"></script>
 </body>
-</html> 
+</html>
