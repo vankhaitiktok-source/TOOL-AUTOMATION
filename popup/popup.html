@@ -1,0 +1,679 @@
+<!-- /*
+
+ RJ ImageFX Auto
+ Copyright (c) 2025 Riiicil
+ Licensed under the MIT License. See LICENSE file for details.
+
+ 
+ ██████╗ ██╗██╗██╗ ██████╗██╗██╗
+ ██╔══██╗██║██║██║██╔════╝██║██║
+ ██████╔╝██║██║██║██║     ██║██║
+ ██╔══██╗██║██║██║██║     ██║██║
+ ██║  ██║██║██║██║╚██████╗██║███████╗
+ ╚═╝  ╚═╝╚═╝╚═╝╚═╝ ╚═════╝╚═╝╚══════╝
+
+*/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RJ ImageFX Auto</title>
+  <!-- local Bootstrap CSS -->
+  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- custom Popup CSS (if needed later) -->
+  <!-- <link rel="stylesheet" href="popup.css"> -->
+  <style>
+    :root {
+      --primary-color: #5271ff;
+      --primary-hover: #4260e8;
+      --success-color: #36b37e;
+      --success-hover: #2d9669;
+      --danger-color: #ff5c71;
+      --danger-hover: #e84c60;
+      --gradient-start: #f8f9fa;
+      --gradient-end: #ffffff;
+    }
+
+    /* Styles for body */
+    body {
+      width: 340px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+      height: auto;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Styles for container-fluid */
+    .container-fluid {
+      padding: 16px;
+      width: 100%;
+      overflow-x: hidden;
+    }
+    
+    /* Styles for header */
+    header {
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    /* Styles for header h5 */
+    header h5 {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 0;
+      position: relative;
+      display: inline-block;
+    }
+    
+    /* Styles for header h5:after */
+    header h5:after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background: var(--primary-color);
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 10px;
+    }
+    
+    /* Styles for h6 */
+    h6 {
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Styles for list-group-item */
+    .list-group-item {
+      background: transparent;
+      border: none;
+      /*border-bottom: 1px solid rgba(0,0,0,0.05);*/
+      padding: 10px 5px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Styles for list-group-item:hover */
+    .list-group-item:hover {
+      background-color: rgba(0,0,0,0.01);
+    }
+    
+    /* Styles for list-group-item:last-child */
+    .list-group-item:last-child {
+      border-bottom: none;
+    }
+    
+    /* Styles for toggle-switch */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    
+    /* Styles for toggle-switch input */
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    /* Styles for toggle-slider */
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    /* Styles for toggle-slider:before */
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    /* Styles for input:checked + .toggle-slider */
+    input:checked + .toggle-slider {
+      background-color: var(--primary-color);
+    }
+    
+    /* Styles for input:focus + .toggle-slider */
+    input:focus + .toggle-slider {
+      box-shadow: 0 0 1px var(--primary-color);
+    }
+    
+    /* Styles for input:checked + .toggle-slider:before */
+    input:checked + .toggle-slider:before {
+      transform: translateX(26px);
+    }
+    
+    /* Styles for toggle-label */
+    .toggle-label {
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #444;
+      cursor: pointer;
+    }
+    
+    /* Styles for form-select */
+    .form-select {
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 5px 5px;
+      font-size: 0.85rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      height: auto;
+    }
+    
+    /* Styles for form-select:focus */
+    .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.15rem rgba(82, 113, 255, 0.2);
+    }
+    
+    /* Styles for input-group */
+    .input-group {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    /* Styles for input-group-text */
+    .input-group-text {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Styles for filePromptStatus */
+    #filePromptStatus {
+      font-size: 0.85rem;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-left: none;
+      color: #666;
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      background-color: #fff;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    
+    /* Styles for loadedPromptsCount */
+    #loadedPromptsCount {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 0.35rem;
+      font-weight: 500;
+    }
+    
+    /* Styles for mainControlsContainer */
+    #mainControlsContainer {
+      margin: 1.25rem 0;
+    }
+    
+    /* Styles for btn-container */
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      align-items: center;
+    }
+    
+    /* Styles for btn */
+    .btn {
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 10px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: none;
+      width: 85%;
+      margin: 0 auto;
+      font-size: 0.9rem;
+    }
+    
+    /* Styles for btn-success */
+    .btn-success {
+      background-color: var(--success-color);
+      animation: ease-in-out;
+    }
+    
+    /* Styles for btn-success:hover */
+    .btn-success:hover {
+      background-color: var(--success-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Styles for btn-danger */
+    .btn-danger {
+      background-color: var(--danger-color);
+      animation: ease-in-out;
+    }
+    
+    /* Styles for btn-danger:hover */
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Styles for statusMessage */
+    #statusMessage {
+      font-size: 0.8rem;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.02);
+      border-radius: 8px;
+      color: #666;
+      transition: all 0.3s ease;
+      text-align: center;
+      margin-top: 8px;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Styles for status-active */
+    .status-active {
+      color: var(--success-color) !important;
+      background-color: rgba(54, 179, 126, 0.1) !important;
+    }
+    
+    /* Styles for status-error */
+    .status-error {
+      color: var(--danger-color) !important;
+      background-color: rgba(255, 92, 113, 0.1) !important;
+    }
+    
+    /* Styles for hidden */
+    .hidden {
+      display: none;
+    }
+    
+    /* Styles for footer */
+    .footer {
+      font-size: 0.7rem;
+      color: #888;
+      /*border-top: 1px solid rgba(0,0,0,0.05);*/
+      /*padding-top: 0.75rem;*/
+      /*margin-top: 0.75rem;*/
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+    
+    /* Styles for customPromptsSection */
+    #customPromptsSection {
+      animation: fadeIn 0.2s ease;
+    }
+    #extraSetting1DropdownSection {
+      animation: fadeIn 0.2s ease;
+    }
+    #specificDownloadFolderSection {
+      animation: fadeIn 0.2s ease;
+    }
+    #customFilenameSection {
+      animation: fadeIn 0.2s ease;
+    }
+    #aspectRatioDropdownSection {
+      animation: fadeIn 0.2s ease;
+    }
+    #additionalSettingsDropdownSection {
+      animation: fadeIn 0.2s ease;
+    }
+    /* Styles for support-overlay */
+    .support-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    /* Styles for support-overlay.show */
+    .support-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Styles for support-modal */
+    .support-modal {
+      background: linear-gradient(135deg, #ffffff, #f0f4ff);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 320px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      text-align: center;
+    }
+    
+    /* Styles for support-overlay.show .support-modal */
+    .support-overlay.show .support-modal {
+      transform: translateY(0);
+    }
+    
+    /* Styles for support-title */
+    .support-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    
+    /* Styles for support-text */
+    .support-text {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    /* Styles for support-btn */
+    .support-btn {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 0 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Styles for support-btn-primary */
+    .support-btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    /* Styles for support-btn-primary:hover */
+    .support-btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Styles for support-btn-skip */
+    .support-btn-skip {
+      background-color: #f2f2f2;
+      color: #777;
+      border: none;
+    }
+    
+    /* Styles for support-btn-skip:hover */
+    .support-btn-skip:hover {
+      background-color: #e5e5e5;
+    }
+    
+    /* Styles for support-footer */
+    .support-footer {
+      margin-top: 15px;
+      font-size: 0.7rem;
+      color: #999;
+    }
+    
+    /* Styles for support-heart */
+    .support-heart {
+      color: var(--danger-color);
+      animation: pulse 1.5s infinite;
+    }
+    
+    /* Styles for settingsToggleGroup .list-group-item */
+    #settingsToggleGroup .list-group-item {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 10px 5px;
+      border: none;
+    }
+    
+    /* Styles for setting-input-group */
+    .setting-input-group {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    
+    /* Styles for setting-input-group input */
+    .setting-input-group input {
+      flex: 1;
+      margin-right: 8px;
+    }
+    
+    /* Styles for download folder status */
+    #downloadFolderStatus {
+      font-size: 0.75rem;
+      color: var(--success-color);
+      margin-top: 0.35rem;
+      font-weight: 500;
+    }
+    #customFilenameStatus {
+      font-size: 0.75rem;
+      color: var(--success-color);
+      margin-top: 0.35rem;
+      font-weight: 500;
+    }
+    /* Styles for primary button */
+    .btn-sm.btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      width: 45px;
+      height: 32px;
+      padding: 5px 5px;
+      border: none;
+      border-radius: 6px;
+    }
+    
+    /* Styles for primary button hover */
+    .btn-sm.btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <!-- Header -->
+    <header class="text-center">
+      <h5>RJ ImageFX Auto</h5>
+    </header>
+
+    <!-- Settings -->
+    <h6>Settings</h6>
+    <div id="settingsToggleGroup" class="list-group list-group-flush mb-3">
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleFloatingControls">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Floating Control</span>
+      </div>
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleRandomize">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Randomize</span>
+      </div>
+      <!-- Aspect Ratio Dropdown Section -->
+      <div id="aspectRatioDropdownSection" class="hidden" style="margin-left: 25px; margin-right:25px;font-size: 0.8rem;">
+        <select class="form-select mb-2" id="aspectRatioDropdown"></select>
+      </div>
+      <!-- Additional Settings Dropdown Section -->
+      <div id="additionalSettingsDropdownSection" class="hidden" style="margin-left: 25px; margin-right:25px;font-size: 0.8rem;">
+        <select class="form-select mb-2" id="additionalSettingsDropdown">
+          <option value="randomPromptFromImagefx" style="font-size: small;">Use ImageFX Lucky Button</option>
+          <option value="randomPromptFromExtension" style="font-size: small;">Use Extension Random Prompt</option>
+        </select>
+      </div>
+      
+
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleUseCustomPrompts">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Use Your Prompt</span>
+      </div>
+        <!-- Elements that appear based on toggleUseCustomPrompts -->
+        <div id="customPromptsSection" class="hidden" style="margin-left: 25px; margin-right:25px;font-size: 0.8rem;">
+          <select class="form-select mb-2" id="promptListDropdown"></select>
+          <div id="fileStatusContainer" class="input-group"> 
+            <label class="input-group-text" for="customPromptFile" id="browseButtonLabel" style="cursor: pointer; padding: 5px 5px;">Browse</label> 
+            <input type="file" class="form-control hidden" id="customPromptFile" accept=".txt"> 
+            <span id="filePromptStatus" style="padding: 5px 5px;">No file chosen</span>
+          </div>
+          <small id="loadedPromptsCount" class="d-block"></small> 
+        </div>
+      <!-- Extra Setting 1 toggle (now inside group) -->
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleExtraSetting1">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Number of Download</span>
+      </div>
+      <!-- Dropdown for Number of Download, hidden by default -->
+      <div id="extraSetting1DropdownSection" style="margin-left: 25px; margin-right:25px;font-size: 0.8rem;" class="hidden">
+        <select class="form-select" id="extraSetting1Dropdown">
+          <option value="4" style="font-size: small;">4 Images</option>
+          <option value="3" style="font-size: small;">3 Images</option>
+          <option value="2" style="font-size: small;">2 Images</option>
+          <option value="1" style="font-size: small;">1 Images</option>
+          <option value="random" style="font-size: small;">Random</option>
+        </select>
+      </div>
+      
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleSpecificDownloadFolder">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Specific Download Folder</span>
+      </div>
+      <div id="specificDownloadFolderSection" class="hidden">
+        <div class="setting-input-group">
+          <input type="text" id="downloadSubfolderName" placeholder="Subfolder Name in Downloads" style="margin-left: 25px;font-size: 0.8rem;" class="form-control">
+          <button id="saveDownloadFolder" class="btn btn-sm btn-primary" style="margin-right: 25px;font-size: 0.8rem; padding: 5px 5px;">Save</button>
+        </div>
+        <div id="downloadFolderStatus" style="margin-left: 25px;margin-bottom: 10px;" class="text-muted small"></div>
+      </div>
+
+      <div class="list-group-item">
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggleCustomFilename">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Custom Filename</span>
+      </div>
+      <div id="customFilenameSection" class="hidden">
+        <div class="setting-input-group mb-2">
+          <input type="text" id="customFilenamePrefix" placeholder="Enter your Prefix" style="margin-left: 25px;font-size: 0.8rem;" class="form-control">
+          <button id="saveCustomFilenamePrefix" class="btn btn-sm btn-primary" style="margin-right: 25px;font-size: 0.8rem; padding: 5px 5px;">Save</button>
+        </div>
+        <div class="setting-input-group mb-2">
+          <input type="text" id="customFilenameSuffix" placeholder="Enter your Suffix" style="margin-left: 25px;font-size: 0.8rem;" class="form-control">
+          <button id="saveCustomFilenameSuffix" class="btn btn-sm btn-primary" style="margin-right: 25px;font-size: 0.8rem; padding: 5px 5px;">Save</button>
+        </div>
+        <div id="customFilenameStatus" style="margin-left: 25px;margin-bottom: 10px;" class="text-muted small"></div>
+      </div>
+    </div>
+    
+    <!-- Main Automation Controls -->
+    <div id="mainControlsContainer">
+      <div class="btn-container">
+        <button class="btn btn-success" id="startButton" type="button">Start Automation</button>
+        <button class="btn btn-danger" id="stopButton" type="button">Stop Automation</button>
+      </div>
+      <div id="statusMessage" role="status" aria-live="polite"> 
+        Ready to start
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center mt-3">
+        <small>
+            This tool is FREE. If you paid, you were scammed. <br>
+            Official version only available at: 
+            <a href="https://s.id/riiicil/" target="_blank" rel="noopener noreferrer">
+                s.id/riiicil
+            </a>
+            <br><br>
+            © Riiicil 2025 - All rights reserved.
+        </small>
+    </footer>
+  </div>
+  
+  <!-- Support Overlay -->
+  <div class="support-overlay" id="supportOverlay">
+    <div class="support-modal">
+      <div class="support-title">Enjoying RJ ImageFX Auto?</div>
+      <div class="support-text">
+        If you find this extension useful, consider supporting its development. 
+        Every contribution helps keep it improved and updated!
+      </div>
+      <div>
+        <a href="https://saweria.co/riiicil" target="_blank" class="support-btn support-btn-primary">Support Here</a>
+        <button class="support-btn support-btn-skip" id="skipSupportBtn">Skip</button>
+      </div>
+      <div class="support-footer">
+        Made with <span class="support-heart">❤</span> by Riiicil
+      </div>
+    </div>
+  </div>
+
+  <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="popup.js"></script>
+  <script src="popup_nagtag.js"></script>
+</body>
+</html> 
